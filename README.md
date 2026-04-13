@@ -152,6 +152,121 @@ The scraper generates a CSV file with the following columns:
 | `stars` | Average rating | `4.5` |
 | `reviews` | Number of reviews | `234` |
 
+## 🤖 Massive Geographic Orchestrator
+
+For large-scale country-wide extractions (e.g., scanning multiple categories across thousands of districts without triggering anti-bot bans or losing data due to crashes), a geographic orchestrator script is provided.
+
+The `orchestrator_peru.py` automatically reads the geographical references in `config/geo_ref_pe.csv`, executes multiple concurrent category queries for each district (defined in `config/constant.py`), and saves the output in a neat, hierarchical folder structure: `data/Departamento/Provincia/Distrito.csv`.
+
+It fully supports **auto-resume**, meaning if you kill the process or get network errors, you can run the exact same command and it will pick up right where it left off by skipping districts that already have an existing CSV file.
+
+### Orchestrator Setup
+1. Generate the geographical base and dictionaries (run once):
+   ```bash
+   cd config
+   python get_dist.py
+   cd ..
+   ```
+2. Check or edit your search categories in `config/constant.py`.
+
+### Orchestrator Usage
+```bash
+# Basic run (Extracts everything infinitely! No limits per category, Concurrent requests: 3)
+python orchestrator_peru.py
+
+# Distributed workload: Filter by department using a JSON array (great for parallel teamwork)
+python orchestrator_peru.py --deps '["Tumbes", "Piura", "Lambayeque"]'
+
+# Run with stricter throttling if you encounter Google IP bans
+python orchestrator_peru.py --concurrent 2 --limit 15
+
+# Force resume from a specific index (e.g. index 500 in the list of 1800+ districts)
+python orchestrator_peru.py --start-idx 500
+```
+
+## 📊 Data Preprocessing Pipeline
+
+A modular ETL pipeline is provided in `etl/` for post-processing the raw scraped data. It consolidates thousands of district-level CSV files into clean, deduplicated, compressed Parquet files — one per department.
+
+### Pipeline Features
+
+- **Deduplication** — Removes duplicate records by Google Place ID (`id` column). This eliminates both intra-file duplicates (caused by pagination) and cross-district overlaps (same business appearing in neighboring district searches).
+- **Schema Optimization** — Casts columns to native types (`Float32`, `Int32`, `Categorical`) to reduce memory footprint and improve analytical query performance.
+- **ZSTD Compression** — Outputs Apache Parquet files with Zstandard compression (level 9), typically achieving **95-99%** size reduction compared to raw CSVs.
+- **Compression Reporting** — Prints a summary table with per-department and aggregate statistics (input size, output size, reduction %, unique row count) and saves it to `etl_report.json`.
+
+### Output Structure
+
+Running the pipeline generates the following clean structure in `data_parquet/`:
+```
+data_parquet/
+├── Peru/
+│   ├── Perú.csv         # Consolidated, globally deduplicated fallback
+│   └── Perú.parquet     # Consolidated, globally deduplicated data
+├── regions/
+│   ├── Amazonas.parquet # Department-level data
+│   ├── Lima.parquet
+│   └── ...
+└── etl_report.json      # Final run metrics and size reductions
+```
+
+### Pipeline Architecture
+
+```
+etl/
+├── __init__.py          # Package init
+├── dedup.py             # Deduplication by Google Place ID
+├── optimize.py          # Schema type casting
+├── compress.py          # ZSTD Parquet writer
+├── report.py            # Human-readable compression statistics
+├── pipeline.py          # Main orchestrator (imports from above)
+└── create_test_env.py   # Test sandbox generator
+```
+
+### Pipeline Usage
+
+```bash
+# Install additional dependencies (one-time)
+pip install -r requirements.txt
+
+# Create a test sandbox from existing data (copies 2 departments)
+python -m etl.create_test_env --src data --dest data_test --num-deps 2
+
+# Run the pipeline against test data
+python -m etl.pipeline --input-dir data_test --output-dir data_parquet
+
+# Run the pipeline against all production data
+python -m etl.pipeline --input-dir data --output-dir data_parquet
+```
+
+### Example Output
+```
+================================================================================
+ETL PIPELINE
+  Input:       /path/to/data_test
+  Output:      /path/to/data_parquet
+  Departments: 1
+  Engine:      Polars (multithreaded)
+================================================================================
+  [DONE]   Amazonas                  | CSV:   14.58 MB -> Parquet:    68.3 KB | Reduction:  99.5% | Unique rows: 697 (0.08s)
+
+  [INFO] Consolidating all regions into Perú.csv and Perú.parquet...
+
+================================================================================
+SUMMARY
+  Departments processed: 1
+  Total raw records:                 48,560
+  Unique records (Department level): 697
+  Total unique records (Perú):       697
+  Raw CSV size (all source files):   14.58 MB
+  Final Perú.csv size:               216.0 KB
+  Final Perú.parquet size:           68.4 KB
+  Final size reduction:              99.54%
+  Total time:                        0.13s
+================================================================================
+  [INFO] Report saved to /path/to/data_parquet/etl_report.json
+```
+
 ## 🔧 What Changed (April 2026 Fix)
 
 Google permanently shut down the `/localservices/prolist` endpoint that this
@@ -173,6 +288,11 @@ scraper originally used (it now returns **HTTP 410 Gone**).
   `tqdm` are required now.
 - All extraction failures now log explicit error messages so failures are never
   silent.
+- **Pagination deduplication fix:** The pagination loop now tracks seen Place IDs
+  with a `set()`. When Google returns a page with no new results (which happens
+  when a query has fewer real results than the page size), the crawler stops
+  immediately instead of looping indefinitely. This prevents the massive row
+  duplication previously observed in rural districts.
 
 **Known limitation:** The `tbm=map` JSON response does not include review
 counts. The `reviews` column in the output CSV will be empty. All other fields
@@ -189,7 +309,7 @@ populated.
 
 2. **Install required packages:**
    ```bash
-   pip install aiohttp tqdm
+   pip install -r requirements.txt
    ```
 
 3. **Verify installation:**
@@ -221,5 +341,3 @@ populated.
 ## 📝 License
 
 This project is provided as-is for educational and research purposes. Please respect Google's Terms of Service and use responsibly.
-
-

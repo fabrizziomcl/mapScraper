@@ -209,15 +209,25 @@ async def search_async(query, lang, country, limit, semaphore):
                 # Step 2: paginate — each page adds ~20 results via &start=N
                 page_size = 20
                 start = 0
+                seen_ids = set()
                 while True:
                     places = await _fetch_results_page(session, search_url, query, start)
 
                     if not places:
-                        # Empty page means no more results available
                         logger.debug(f'[{query}] Empty page at start={start}, stopping.')
                         break
 
-                    for place in places:
+                    # Filter out places we have already collected. When Google
+                    # runs out of real results it keeps returning the same page
+                    # regardless of the start offset, causing an infinite loop.
+                    new_places = [p for p in places if p['id'] not in seen_ids]
+
+                    if not new_places:
+                        logger.debug(f'[{query}] No new results at start={start}, stopping.')
+                        break
+
+                    for place in new_places:
+                        seen_ids.add(place['id'])
                         result.append(place)
                         pbar.update(1)
                         pbar.set_postfix({'Total': len(result)})
