@@ -1,27 +1,243 @@
 {
-    "departments_processed": 1,
-    "total_raw_records": 48560,
-    "unique_records_department_level": 697,
-    "total_unique_records_peru": 697,
-    "raw_csv_size_bytes": 15284486,
-    "raw_csv_size_formatted": "14.58 MB",
-    "department_parquets_size_bytes": 69938,
-    "department_parquets_size_formatted": "68.3 KB",
-    "peru_csv_size_bytes": 221176,
-    "peru_csv_size_formatted": "216.0 KB",
-    "peru_parquet_size_bytes": 70011,
-    "peru_parquet_size_formatted": "68.4 KB",
-    "overall_reduction_percentage": 99.54194730526103,
-    "total_time_seconds": 0.6950318813323975,
+    "departments_processed": 25,
+    "total_raw_records": 3918975,
+    "unique_records_department_level": 75317,
+    "total_unique_records_peru": 54898,
+    "raw_csv_size_bytes": 1286374232,
+    "raw_csv_size_formatted": "1.20 GB",
+    "department_parquets_size_bytes": 6618219,
+    "department_parquets_size_formatted": "6.31 MB",
+    "peru_csv_size_bytes": 17283896,
+    "peru_csv_size_formatted": "16.48 MB",
+    "peru_parquet_size_bytes": 4713145,
+    "peru_parquet_size_formatted": "4.49 MB",
+    "overall_reduction_percentage": 99.6336101203868,
+    "total_time_seconds": 11.853221416473389,
     "department_details": [
         {
             "name": "Amazonas",
-            "csv_bytes": 15284486,
-            "parquet_bytes": 69938,
-            "unique_rows": 697,
-            "raw_count": 48560,
-            "elapsed": 0.641115665435791,
+            "csv_bytes": 160036237,
+            "parquet_bytes": 234343,
+            "unique_rows": 2501,
+            "raw_count": 492765,
+            "elapsed": 1.4160487651824951,
             "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Amazonas.parquet"
+        },
+        {
+            "name": "Apurímac",
+            "csv_bytes": 138579220,
+            "parquet_bytes": 228465,
+            "unique_rows": 2525,
+            "raw_count": 421438,
+            "elapsed": 1.0034897327423096,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Apurímac.parquet"
+        },
+        {
+            "name": "Arequipa",
+            "csv_bytes": 326704908,
+            "parquet_bytes": 382447,
+            "unique_rows": 4506,
+            "raw_count": 993916,
+            "elapsed": 1.6976475715637207,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Arequipa.parquet"
+        },
+        {
+            "name": "Ayacucho",
+            "csv_bytes": 251981175,
+            "parquet_bytes": 262535,
+            "unique_rows": 2921,
+            "raw_count": 766090,
+            "elapsed": 1.6445581912994385,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Ayacucho.parquet"
+        },
+        {
+            "name": "Cajamarca",
+            "csv_bytes": 292463691,
+            "parquet_bytes": 304258,
+            "unique_rows": 3445,
+            "raw_count": 890347,
+            "elapsed": 1.6922094821929932,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Cajamarca.parquet"
+        },
+        {
+            "name": "Callao",
+            "csv_bytes": 10162926,
+            "parquet_bytes": 47692,
+            "unique_rows": 461,
+            "raw_count": 28715,
+            "elapsed": 0.3176839351654053,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Callao.parquet"
+        },
+        {
+            "name": "Cusco",
+            "csv_bytes": 22225749,
+            "parquet_bytes": 293744,
+            "unique_rows": 3306,
+            "raw_count": 67490,
+            "elapsed": 0.34242749214172363,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Cusco.parquet"
+        },
+        {
+            "name": "Huancavelica",
+            "csv_bytes": 5249666,
+            "parquet_bytes": 269026,
+            "unique_rows": 2957,
+            "raw_count": 15966,
+            "elapsed": 0.2244882583618164,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Huancavelica.parquet"
+        },
+        {
+            "name": "Huánuco",
+            "csv_bytes": 5710543,
+            "parquet_bytes": 170553,
+            "unique_rows": 1942,
+            "raw_count": 17688,
+            "elapsed": 0.1636042594909668,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Huánuco.parquet"
+        },
+        {
+            "name": "Ica",
+            "csv_bytes": 4482948,
+            "parquet_bytes": 213201,
+            "unique_rows": 2438,
+            "raw_count": 13820,
+            "elapsed": 0.11821341514587402,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Ica.parquet"
+        },
+        {
+            "name": "Junín",
+            "csv_bytes": 11661762,
+            "parquet_bytes": 440773,
+            "unique_rows": 5114,
+            "raw_count": 36404,
+            "elapsed": 0.31031227111816406,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Junín.parquet"
+        },
+        {
+            "name": "La_Libertad",
+            "csv_bytes": 4478068,
+            "parquet_bytes": 415404,
+            "unique_rows": 4837,
+            "raw_count": 13555,
+            "elapsed": 0.1840064525604248,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\La_Libertad.parquet"
+        },
+        {
+            "name": "Lambayeque",
+            "csv_bytes": 3276245,
+            "parquet_bytes": 203320,
+            "unique_rows": 2370,
+            "raw_count": 9974,
+            "elapsed": 0.11025428771972656,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Lambayeque.parquet"
+        },
+        {
+            "name": "Lima",
+            "csv_bytes": 19241711,
+            "parquet_bytes": 1141202,
+            "unique_rows": 13619,
+            "raw_count": 58216,
+            "elapsed": 0.5313045978546143,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Lima.parquet"
+        },
+        {
+            "name": "Loreto",
+            "csv_bytes": 2174058,
+            "parquet_bytes": 157688,
+            "unique_rows": 1733,
+            "raw_count": 6823,
+            "elapsed": 0.13979744911193848,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Loreto.parquet"
+        },
+        {
+            "name": "Madre_de_Dios",
+            "csv_bytes": 470671,
+            "parquet_bytes": 60689,
+            "unique_rows": 585,
+            "raw_count": 1421,
+            "elapsed": 0.056623220443725586,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Madre_de_Dios.parquet"
+        },
+        {
+            "name": "Moquegua",
+            "csv_bytes": 1069652,
+            "parquet_bytes": 83432,
+            "unique_rows": 882,
+            "raw_count": 3274,
+            "elapsed": 0.05741477012634277,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Moquegua.parquet"
+        },
+        {
+            "name": "Pasco",
+            "csv_bytes": 2324691,
+            "parquet_bytes": 135288,
+            "unique_rows": 1446,
+            "raw_count": 7114,
+            "elapsed": 0.0662832260131836,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Pasco.parquet"
+        },
+        {
+            "name": "Piura",
+            "csv_bytes": 3788341,
+            "parquet_bytes": 262225,
+            "unique_rows": 3036,
+            "raw_count": 11926,
+            "elapsed": 0.13772845268249512,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Piura.parquet"
+        },
+        {
+            "name": "Puno",
+            "csv_bytes": 3654307,
+            "parquet_bytes": 215291,
+            "unique_rows": 2417,
+            "raw_count": 11389,
+            "elapsed": 0.1805729866027832,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Puno.parquet"
+        },
+        {
+            "name": "San_Martín",
+            "csv_bytes": 5124592,
+            "parquet_bytes": 341748,
+            "unique_rows": 3869,
+            "raw_count": 15200,
+            "elapsed": 0.18336081504821777,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\San_Martín.parquet"
+        },
+        {
+            "name": "Tacna",
+            "csv_bytes": 2116301,
+            "parquet_bytes": 87859,
+            "unique_rows": 950,
+            "raw_count": 6547,
+            "elapsed": 0.09163784980773926,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Tacna.parquet"
+        },
+        {
+            "name": "Tumbes",
+            "csv_bytes": 1242910,
+            "parquet_bytes": 87242,
+            "unique_rows": 927,
+            "raw_count": 3837,
+            "elapsed": 0.04891228675842285,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Tumbes.parquet"
+        },
+        {
+            "name": "Ucayali",
+            "csv_bytes": 748150,
+            "parquet_bytes": 106200,
+            "unique_rows": 1129,
+            "raw_count": 2275,
+            "elapsed": 0.05750608444213867,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Ucayali.parquet"
+        },
+        {
+            "name": "Áncash",
+            "csv_bytes": 7405710,
+            "parquet_bytes": 473594,
+            "unique_rows": 5401,
+            "raw_count": 22785,
+            "elapsed": 0.3061521053314209,
+            "output_file": "C:\\Users\\sergiomarin\\Documents\\UP\\BDA\\mapScraper\\data_parquet\\regions\\Áncash.parquet"
         }
     ]
 }
