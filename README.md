@@ -4,6 +4,13 @@
 
 A powerful Python tool for scraping Google Maps local services data. Extract detailed information about businesses and places directly from Google Maps search results.
 
+## 🗺️ Project Scope
+
+This repository (**mapScraper**) represents **Phase 1** of our Gastronomic Big Data Pipeline. Its primary responsibility is the massive, country-wide ingestion and consolidation of restaurant entities (places) into a clean, deduplicated data layer (Parquet).
+
+> **Looking for the reviews scraper?**
+> For **Phase 2** (high-performance asynchronous extraction of user reviews from the collected restaurants), please see our complementary repository: [googlemaps-reviews-scraper-es](https://github.com/christivn/googlemaps-reviews-scraper-es).
+
 ## 🚀 Features
 
 With the **Google Maps Scraper**, you can obtain detailed data about businesses and specific places on Google Maps, such as:
@@ -33,12 +40,18 @@ With the **Google Maps Scraper**, you can obtain detailed data about businesses 
    cd mapScraper
    ```
 
-2. **Install required packages:**
+2. **Create a Conda virtual environment (Python 3.11 recommended):**
    ```bash
-   pip install aiohttp tqdm
+   conda create -n map-scraper python=3.11 -y
+   conda activate map-scraper
    ```
 
-3. **Verify installation:**
+3. **Install required packages:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Verify installation:**
    ```bash
    python mapScraperX.py --help
    ```
@@ -299,23 +312,7 @@ counts. The `reviews` column in the output CSV will be empty. All other fields
 (id, title, category, address, phone, website, coordinates, stars) are fully
 populated.
 
-## 📦 Installation (Updated)
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/christivn/mapScraper.git
-   cd mapScraper
-   ```
-
-2. **Install required packages:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Verify installation:**
-   ```bash
-   python mapScraperX.py --help
-   ```
 
 ## 🐛 Troubleshooting
 
