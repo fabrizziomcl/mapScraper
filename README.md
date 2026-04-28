@@ -1,4 +1,4 @@
-![Header](https://github.com/christivn/mapScraper/blob/main/github-header-image.png?raw=true)
+![Header](github-header-image.png?raw=true)
 
 # Google Maps Scraper
 
