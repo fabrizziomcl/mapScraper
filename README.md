@@ -9,7 +9,7 @@ A powerful Python tool for scraping Google Maps local services data. Extract det
 This repository (**mapScraper**) represents **Phase 1** of our Gastronomic Big Data Pipeline. Its primary responsibility is the massive, country-wide ingestion and consolidation of restaurant entities (places) into a clean, deduplicated data layer (Parquet).
 
 > **Looking for the reviews scraper?**
-> For **Phase 2** (high-performance asynchronous extraction of user reviews from the collected restaurants), please see our complementary repository: [googlemaps-reviews-scraper-es](https://github.com/christivn/googlemaps-reviews-scraper-es).
+> For **Phase 2** (async Playwright extraction of user reviews from the collected restaurants), see the sibling submodule [`reviewsScraper`](../reviewsScraper).
 
 ## 🚀 Features
 
@@ -24,8 +24,9 @@ With the **Google Maps Scraper**, you can obtain detailed data about businesses 
 - **Associated domain and URL** - Business website information
 - **Coordinates** - Latitude and longitude
 - **Average star rating** - Customer rating
-- **Number of reviews** - Total review count
 - **Customizable search parameters** - Language, country, result limit, and output filename
+
+> **Note (April 2026):** The legacy `reviews` column (total review count) is no longer emitted — Google's `tbm=map` endpoint stopped returning it. A regression test in [`tests/test_reviews_column.py`](tests/test_reviews_column.py) guards this. Per-place review counts are obtained during Fase 2 (`reviewsScraper`).
 
 ## 📋 Prerequisites
 
@@ -163,7 +164,7 @@ The scraper generates a CSV file with the following columns:
 | `url` | Full website URL | `https://www.joespizza.com` |
 | `coor` | Coordinates (lat,lng) | `40.7128,-74.0060` |
 | `stars` | Average rating | `4.5` |
-| `reviews` | Number of reviews | `234` |
+| `source_query` | Original query that produced this row | `Pollería en el distrito de ...` |
 
 ## 🤖 Massive Geographic Orchestrator
 
@@ -171,7 +172,7 @@ For large-scale country-wide extractions (e.g., scanning multiple categories acr
 
 The `orchestrator_peru.py` automatically reads the geographical references in `config/geo_ref_pe.csv`, executes multiple concurrent category queries for each district (defined in `config/constant.py`), and saves the output in a neat, hierarchical folder structure: `data/Departamento/Provincia/Distrito.csv`.
 
-It fully supports **auto-resume**, meaning if you kill the process or get network errors, you can run the exact same command and it will pick up right where it left off by skipping districts that already have an existing CSV file.
+It fully supports **auto-resume**: if you kill the process or get network errors, re-run the same command and it picks up where it left off — districts with an existing CSV are skipped. CSVs are written atomically (`*.partial` → `os.replace`) so a half-written file is impossible. Each completed district also emits a `<district>.json` manifest with start/end timestamps, rows-per-category breakdown and the parameters used.
 
 ### Orchestrator Setup
 1. Generate the geographical base and dictionaries (run once):
@@ -308,9 +309,10 @@ scraper originally used (it now returns **HTTP 410 Gone**).
   duplication previously observed in rural districts.
 
 **Known limitation:** The `tbm=map` JSON response does not include review
-counts. The `reviews` column in the output CSV will be empty. All other fields
+counts. Since the column would always be empty it was removed from the output
+schema entirely (verified empirically over 407,436 rows). All other fields
 (id, title, category, address, phone, website, coordinates, stars) are fully
-populated.
+populated. Per-place review counts come from Fase 2 (`reviewsScraper`).
 
 
 
